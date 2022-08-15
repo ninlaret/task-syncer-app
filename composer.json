@@ -1,5 +1,5 @@
 {
-    "name": "ninlaret/task-syncer-basic",
+    "name": "ninlaret/task-syncer-app",
     "description": "Task syncer project template",
     "require": {
         "php": ">=8.0",
