@@ -1,0 +1,14 @@
+{
+    "name": "ninlaret/task-syncer-basic",
+    "description": "Task syncer project template",
+    "require": {
+        "php": ">=8.0",
+        "ninlaret/task-syncer": "^1.0.0"
+    },
+    "minimum-stability": "stable",
+    "autoload": {
+        "psr-4": {
+            "app\\": "app/"
+        }
+    }
+}
