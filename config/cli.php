@@ -5,9 +5,7 @@ return [
     'logger' => 'core\logger\EchoLogger',
 
     'syncParams' => [
-        'target' => [
-            'gitlab' => ['notion'],
-            'notion' => ['habitica'],
-        ],
+        'gitlab' => ['notion'],
+        'notion' => ['habitica'],
     ],
 ];

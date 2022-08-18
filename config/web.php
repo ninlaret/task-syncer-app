@@ -6,8 +6,6 @@ return [
     'logger' => 'core\logger\FileLogger',
 
     'syncParams' => [
-        'target' => [
-            'habitica' => ['notion', 'gitlab']
-        ]
+        'habitica' => ['notion', 'gitlab']
     ],
 ];
