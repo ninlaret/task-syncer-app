@@ -3,7 +3,7 @@
     "description": "Task syncer project template",
     "require": {
         "php": ">=8.0",
-        "ninlaret/task-syncer": "^1.0.0"
+        "ninlaret/task-syncer": "^1.0.1"
     },
     "minimum-stability": "stable",
     "autoload": {
