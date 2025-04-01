@@ -1,3 +1,4 @@
+/config/params.php
+/config/systems.php
 /vendor/
 .idea
-debug.log

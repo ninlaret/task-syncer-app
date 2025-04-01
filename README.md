@@ -2,23 +2,21 @@
     <h1 align="center">Task-Syncer Project Template</h1>
 </p>
 
-A simple app made for synchronizing tasks between different task systems.
+An app made for synchronizing tasks between different task systems.
 
-It contains realizations for three task systems: notion, gitlab and habitica and you can add more of the systems you
-need.
+It contains realizations for three task systems: notion, gitlab and habitica. You can add more of the systems you
+need using config files.
 
 DIRECTORY STRUCTURE
 -------------------
 
-      app/                contains system realizations
-       - controller/      contains custom controller for webkooks
-       - system/          contains local realizations of task systems
+      bin/                contains main console script
       config/             contains application configurations
 
 REQUIREMENTS
 ------------
 
-The minimum requirement by this project template that your Web server supports PHP 8.0
+The minimum requirement by this project template that your Web server supports PHP 8.3
 
 INSTALLATION
 ------------
@@ -34,9 +32,6 @@ Install application template by running the following command:
 composer create-project --prefer-dist ninlaret/task-syncer-app .
 ~~~
 
-If you expect to use any tasker webhooks, you have to choose a Web-accessible folder and a host with a Web-server and a
-public IP.
-
 CONFIGURATION
 -------------
 
@@ -45,40 +40,52 @@ CONFIGURATION
 Edit the file `config/params.php` with real data, for example:
 
 ```php
-return [
-    'dbName' => 'tasker',
-    'dbUser' => 'user',
-    'dbPassword' => 'password',
-    ...
-];
+    'database' => [
+        'host' => 'localhost',
+        'user' => 'user',
+        'password' => 'password',
+        ...
+    ]
 ```
 
 You should add an existing database in this section.
 
 ### Synchronization settings
 
-First you have to add all your systems in the `apiRealisations` section in `config/params.php` file. The realization of
-any API should be compatible with the `core\system\ApiSystem` class.
-All the tokens may also be put in `config/params.php`.
 
-Then you need to edit the `syncParams` section in `config/cli.php` and `config/web.php` files, for example:
+First you have to copy config files via commands:
+~~~
+mv config/params.php.dist config/params.php
+mv config/systems.php.dist config/systems.php
+~~~
+
+
+Then you should fill up the 'mappers', 'updaters' and 'fetchers' keys in config/systems.php with your systems
+
+'mappers' elements should be compatible with the `core\domain\TaskMapperInterface`
+
+'updaters' elements should be compatible with the `core\domain\TaskApiUpdateInterface`
+
+'fetchers' elements should be compatible with the `core\domain\TaskApiFetchInterface`
+
+
+Then you need to edit the `syncRoutes` section in `config/params.php` file, for example:
 
 ```php
-'syncParams' => [
-    'target' => [
-        'gitlab' => ['notion'],
-        'notion' => ['habitica'],
-    ],
-]
+    'syncRoutes' => [
+        'gitlab' => ['habitica']
+    ]
 ```
-It says all the tasks from gitlab are synced notion, and all the tasks from notion are synced with habitica.
+Here it says all the tasks from gitlab will be synced habitica.
 
 USAGE
 -------------
+Before first usage you should install database schema via command
+~~~
+php bin/console init
+~~~
 
 To sync systems from cli run the following command:
 ~~~
-cli sync
+php bin/console sync
 ~~~
-
-To use webhooks add the `app\controller\CustomController` action method. For example, method `CustomController::habiticaAction()` is available by the `http://your_app_host/habitica` url.

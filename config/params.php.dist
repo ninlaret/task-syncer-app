@@ -1,0 +1,15 @@
+<?php
+
+return [
+    'syncRoutes' => [
+        'gitlab' => ['habitica']
+    ],
+
+    'database' => [
+        'host' => 'localhost',
+        'user' => 'user',
+        'password' => 'password',
+        'dbname' => 'tasker',
+        'driver' => 'pdo_mysql',
+    ]
+];

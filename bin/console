@@ -1,0 +1,17 @@
+#!/usr/bin/env php
+<?php
+
+use core\infrastructure\console\ConfigLoader;
+use core\infrastructure\console\ConsoleApp;
+
+require __DIR__ . '/../vendor/autoload.php';
+
+$basePath = dirname(__DIR__);
+
+$options = getopt('', ['params::', 'systems::']);
+$paramsPath = $options['params'] ?? null;
+$systemsPath = $options['systems'] ?? null;
+
+$container = ConfigLoader::buildContainer($basePath, $paramsPath, $systemsPath);
+
+(new ConsoleApp($container))->run();

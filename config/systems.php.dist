@@ -1,0 +1,75 @@
+<?php
+
+use core\infrastructure\api\gitlab\GitLabApi;
+use core\infrastructure\api\gitlab\GitLabTaskMapper;
+use core\infrastructure\api\habitica\HabiticaApi;
+use core\infrastructure\api\habitica\HabiticaTaskMapper;
+use core\infrastructure\api\notion\NotionApi;
+use core\infrastructure\api\notion\NotionTaskMapper;
+use GuzzleHttp\Client;
+
+return [
+    'mappers' => function () {
+        return [
+            'notion' => new NotionTaskMapper(),
+            'habitica' => new HabiticaTaskMapper(),
+            'gitlab' => new GitLabTaskMapper(),
+        ];
+    },
+
+    'updaters' => function ($container) {
+        return [
+            'notion' => $container->get('notion'),
+            'habitica' => $container->get('habitica'),
+            'gitlab' => $container->get('gitlab'),
+        ];
+    },
+
+    'fetchers' => function ($container) {
+        return [
+            'notion' => $container->get('notion'),
+            'habitica' => $container->get('habitica'),
+            'gitlab' => $container->get('gitlab'),
+        ];
+    },
+
+    'habitica' => function () {
+        return new HabiticaApi(
+            new Client([
+                'base_uri' => 'https://habitica.com/api/v3/',
+                'headers' => [
+                    'x-api-user' => 'x-api-user',
+                    'x-api-key' => 'x-api-key',
+                    'Content-Type' => 'application/json',
+                ]
+            ]),
+        );
+    },
+
+    'gitlab' => function () {
+        return new GitLabApi(
+            new Client([
+                'base_uri' => 'https://gitlab.com/api/v4/',
+                'headers' => [
+                    'PRIVATE-TOKEN' => 'token',
+                ],
+            ]),
+            'id'
+        );
+    },
+
+    'notion' => function () {
+        return new NotionApi(
+            new Client([
+                'base_uri' => 'https://api.notion.com/v1/',
+                'headers' => [
+                    'Authorization' => 'Bearer ' . 'secret',
+                    'Content-Type' => 'application/json',
+                    'Notion-Version' => '2021-08-16'
+                ],
+            ]),
+            'id',
+            'Done'
+        );
+    }
+];

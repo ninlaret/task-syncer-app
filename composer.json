@@ -2,8 +2,8 @@
     "name": "ninlaret/task-syncer-app",
     "description": "Task syncer project template",
     "require": {
-        "php": ">=8.0",
-        "ninlaret/task-syncer": "^1.0.1"
+        "php": ">=8.3",
+        "ninlaret/task-syncer": "^2.0.2"
     },
     "minimum-stability": "stable",
     "autoload": {
